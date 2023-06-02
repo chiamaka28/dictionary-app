@@ -2,9 +2,31 @@ import book from "../assets/book.png";
 import toggle from "../assets/toggle.png";
 import moon from "../assets/moon.png";
 import search from "../assets/search.png";
+import { useState } from "react";
 
-const Header = ({ setText, text }) => {
-  console.log(text);
+const Header = () => {
+  const [text, setText] = useState("");
+  const [displaySearch , setDisplaySearch] = useState ([])
+
+  const handleSearch = () => {
+      fetch(`https://api.dictionaryapi.dev/api/v2/entries/en/${text}`)
+        .then((res) => {
+          return res.json();
+        })
+        .then((data) => { setDisplaySearch(data)
+          console.log(displaySearch);
+          return data
+          
+
+      
+        });
+   
+  };
+ const clickHandler =() => {
+   handleSearch();
+   setText("")
+
+ }
   return (
     <>
       <div className="flex justify-between py-5">
@@ -30,10 +52,21 @@ const Header = ({ setText, text }) => {
           value={text}
           onChange={(e) => setText(e.target.value)}
         />
-        <button className="absolute  top-6 right-6">
+        <button onClick={clickHandler} className="absolute  top-6 right-6">
           <img className="w-6" src={search} alt="" />
         </button>
        
+      </div>
+      <div>
+      
+      {displaySearch.map((search => { return (
+         <div>
+          <h1>{search.word}</h1>
+          <h4>{search.phonetic}</h4>
+         </div>
+         
+         )
+        }))}
       </div>
     </>
   );
