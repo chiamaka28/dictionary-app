@@ -6,27 +6,25 @@ import { useState } from "react";
 
 const Header = () => {
   const [text, setText] = useState("");
-  const [displaySearch , setDisplaySearch] = useState ([])
+  const [displaySearch, setDisplaySearch] = useState([]);
 
-  const handleSearch = () => {
-      fetch(`https://api.dictionaryapi.dev/api/v2/entries/en/${text}`)
-        .then((res) => {
-          return res.json();
-        })
-        .then((data) => { setDisplaySearch(data)
-          console.log(displaySearch);
-          return data
-          
-
+  async function handleSearch () {
+   const response = await fetch(`https://api.dictionaryapi.dev/api/v2/entries/en/${text}`)
       
-        });
-   
-  };
- const clickHandler =() => {
-   handleSearch();
-   setText("")
+	if (!response.ok) {
+		throw new Error(`HTTP error! status: ${response.status}`);
+	}
+	const data = await response.json();
+  console.log(data)
+  setDisplaySearch(data)
+}
 
- }
+
+  const clickHandler = () => {
+    handleSearch();
+    setText("");
+  };
+
   return (
     <>
       <div className="flex justify-between py-5">
@@ -55,18 +53,26 @@ const Header = () => {
         <button onClick={clickHandler} className="absolute  top-6 right-6">
           <img className="w-6" src={search} alt="" />
         </button>
-       
       </div>
       <div>
-      
-      {displaySearch.map((search => { return (
-         <div>
-          <h1>{search.word}</h1>
-          <h4>{search.phonetic}</h4>
-         </div>
+        {displaySearch.flat().map(
+          (item,
+           index) => (
+          <div key={index}>
+            <h1>{item.word}</h1>
+            <h4>{item.sourceUrls}</h4>
+           <div>
+              {displaySearch.meanings.map((meaning, index) => {
+                return (
+                    <ul  key={index}>
+                      <li>{meaning}</li>
+                    </ul>
+                )})}
+            </div>
          
-         )
-        }))}
+          </div>
+        ))}
+       
       </div>
     </>
   );
