@@ -7,6 +7,7 @@ export default {
         grey:"#A1A1A178",
         lightPurple:"#B36BE191",
         purple:"#B36BE1FA",
+        gray:"#0000009C"
       }
     },
   },

@@ -70,7 +70,7 @@ const Header = () => {
           <img className="w-6" src={search} alt="" />
         </button>
       </div>
-      <div>
+      <div className="px-5">
         {displaySearch.map((item, index) => (
           <div key={index}>
             <h1 className="text-3xl">{item.word}</h1>
@@ -95,24 +95,30 @@ const Header = () => {
                     key={index}
                     className="flex  items-center justify-start gap-3"
                   >
-                    <h2 className="">{meaning.partOfSpeech}</h2>
+                    <h2 className="font-['Pacifico'] text-[18px]">{meaning.partOfSpeech}</h2>
                     <span className="w-[100%] h-[1px] bg-grey"></span>
                   </div>
-                  <div>
-                    <h4 className="py-4">Meaning</h4>
+                  <div className="pb-7">
+                    <h4 className="py-4 text-gray">Meaning</h4>
 
                     {meaning.definitions
                       .slice(0, 5)
                       .map((definition, index) => {
                         return (
                           <div>
-                            <ul className="list-disc px-5">
+                            <ul className="list-disc list-outside list-style-purple marker:text-purple">
                               <li key={index} className="py-2">
                                 {definition.definition}
                               </li>
                             </ul>
-                            {definition.example? <p>"{definition.example}"</p>: ""}
-                            {/* <p className=""><span>Synonyms</span>{definition.synonyms}</p> */}
+                            {definition.example ? (
+                              <p className="text-gray">"{definition.example}"</p>
+                            ) : (
+                              ""
+                            )}
+                            {definition.synonyms.slice(0,1).map((synonyms, index) => {
+                              return <p key={index} className="text-purple py-3"><span className="text-gray pr-5">Synonyms</span>{synonyms}</p>;
+                            })}
                           </div>
                         );
                       })}
@@ -120,7 +126,7 @@ const Header = () => {
                 </>
               );
             })}
-            <div className="py-4 md:flex md:gap-2">
+            <div className="py-4 md:flex md:gap-2 border-t-[1px] border-grey">
               <h4>Source</h4>
               <a href={item.sourceUrls} target="_blank">
                 {item.sourceUrls}
