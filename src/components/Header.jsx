@@ -2,7 +2,7 @@ import book from "../assets/book.png";
 import toggle from "../assets/toggle.png";
 import moon from "../assets/moon.png";
 import search from "../assets/search.png";
-import play from "../assets/play.png"
+import play from "../assets/play.png";
 import { useState, useRef } from "react";
 
 const Header = () => {
@@ -63,6 +63,7 @@ const Header = () => {
         <input
           className="bg-grey w-full outline-0 py-2 px-4 my-4 rounded-lg"
           value={text}
+          name="search"
           onChange={(e) => setText(e.target.value)}
         />
         <button onClick={clickHandler} className="absolute  top-6 right-6">
@@ -71,39 +72,59 @@ const Header = () => {
       </div>
       <div>
         {displaySearch.map((item, index) => (
-          <div key={index} >
+          <div key={index}>
             <h1 className="text-3xl">{item.word}</h1>
             {item.phonetics.slice(0, 1).map((it, index) => {
               return (
-                <div  key={index} className="flex justify-between ">
-                  <h3>{it.text}</h3>
+                <div key={index} className="flex justify-between ">
+                  <h3 className="text-purple">{it.text}</h3>
                   <audio src={it.audio} ref={ref}></audio>
-                  <button className="bg-lightPurple p-2 rounded-full text-white mb-5" onClick={handleClick}>
-                   <img src={play} className="h-[25px]" alt="" />
+                  <button
+                    className="bg-lightPurple p-2 rounded-full text-white mb-5"
+                    onClick={handleClick}
+                  >
+                    <img src={play} className="h-[25px]" alt="" />
                   </button>
                 </div>
               );
             })}
-              {item.meanings.map((meaning, index) => {
-                return (
-                  <>
-                    <div key={index} className="flex  items-center justify-start gap-3">
-                      <h2 className="">{meaning.partOfSpeech}</h2>
-                      <span className="w-[100%] h-[1px] bg-grey"></span>
-                    </div>
-                    <ul className="list-disc px-4">
-                      {meaning.definitions
-                        .slice(0, 5)
-                        .map((definition, index) => {
-                          return <li key={index}>{definition.definition}</li>;
-                        })}
-                    </ul>
-                  </>
-                );
-              })}
+            {item.meanings.map((meaning, index) => {
+              return (
+                <>
+                  <div
+                    key={index}
+                    className="flex  items-center justify-start gap-3"
+                  >
+                    <h2 className="">{meaning.partOfSpeech}</h2>
+                    <span className="w-[100%] h-[1px] bg-grey"></span>
+                  </div>
+                  <div>
+                    <h4 className="py-4">Meaning</h4>
+
+                    {meaning.definitions
+                      .slice(0, 5)
+                      .map((definition, index) => {
+                        return (
+                          <div>
+                            <ul className="list-disc px-5">
+                              <li key={index} className="py-2">
+                                {definition.definition}
+                              </li>
+                            </ul>
+                            {definition.example? <p>"{definition.example}"</p>: ""}
+                            {/* <p className=""><span>Synonyms</span>{definition.synonyms}</p> */}
+                          </div>
+                        );
+                      })}
+                  </div>
+                </>
+              );
+            })}
             <div className="py-4 md:flex md:gap-2">
               <h4>Source</h4>
-              <h5>{item.sourceUrls}</h5>
+              <a href={item.sourceUrls} target="_blank">
+                {item.sourceUrls}
+              </a>
             </div>
           </div>
         ))}

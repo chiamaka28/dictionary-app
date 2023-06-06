@@ -6,6 +6,7 @@ export default {
       colors:{
         grey:"#A1A1A178",
         lightPurple:"#B36BE191",
+        purple:"#B36BE1FA",
       }
     },
   },
