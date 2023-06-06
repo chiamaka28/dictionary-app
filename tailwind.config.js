@@ -4,7 +4,8 @@ export default {
   theme: {
     extend: {
       colors:{
-        grey:"#A1A1A178"
+        grey:"#A1A1A178",
+        lightPurple:"#B36BE191",
       }
     },
   },
