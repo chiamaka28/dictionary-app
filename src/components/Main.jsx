@@ -5,7 +5,7 @@ import search from "../assets/search.png";
 import play from "../assets/play.png";
 import { useState, useRef } from "react";
 
-const Header = () => {
+const Main = () => {
   const ref = useRef(null);
   const [text, setText] = useState("");
   const [displaySearch, setDisplaySearch] = useState([]);
@@ -95,7 +95,9 @@ const Header = () => {
                     key={index}
                     className="flex  items-center justify-start gap-3"
                   >
-                    <h2 className="font-['Pacifico'] text-[18px]">{meaning.partOfSpeech}</h2>
+                    <h2 className="font-['Pacifico'] text-[18px]">
+                      {meaning.partOfSpeech}
+                    </h2>
                     <span className="w-[100%] h-[1px] bg-grey"></span>
                   </div>
                   <div className="pb-7">
@@ -112,13 +114,24 @@ const Header = () => {
                               </li>
                             </ul>
                             {definition.example ? (
-                              <p className="text-gray">"{definition.example}"</p>
+                              <p className="text-gray">
+                                "{definition.example}"
+                              </p>
                             ) : (
                               ""
                             )}
-                            {definition.synonyms.slice(0,1).map((synonyms, index) => {
-                              return <p key={index} className="text-purple py-3"><span className="text-gray pr-5">Synonyms</span>{synonyms}</p>;
-                            })}
+                            {definition.synonyms
+                              .slice(0, 1)
+                              .map((synonyms, index) => {
+                                return (
+                                  <p key={index} className="text-purple py-3">
+                                    <span className="text-gray pr-5">
+                                      Synonyms
+                                    </span>
+                                    {synonyms}
+                                  </p>
+                                );
+                              })}
                           </div>
                         );
                       })}
@@ -126,9 +139,9 @@ const Header = () => {
                 </>
               );
             })}
-            <div className="py-4 md:flex md:gap-2 border-t-[1px] border-grey">
-              <h4>Source</h4>
-              <a href={item.sourceUrls} target="_blank">
+            <div className="py-4 md:flex md:gap-2 border-t-[1px] border-grey pb-12">
+              <h4 className="text-gray">Source</h4>
+              <a className="underline" href={item.sourceUrls} target="_blank">
                 {item.sourceUrls}
               </a>
             </div>
