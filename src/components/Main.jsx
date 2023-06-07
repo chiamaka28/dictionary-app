@@ -152,4 +152,4 @@ const Main = () => {
   );
 };
 
-export default Header;
+export default Main;
