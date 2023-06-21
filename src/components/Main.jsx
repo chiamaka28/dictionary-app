@@ -1,5 +1,6 @@
 import book from "../assets/book.png";
 import boy from "../assets/boy.png";
+import sadboy from "../assets/sadboy.png";
 import toggle from "../assets/toggle.png";
 import moon from "../assets/moon.png";
 import search from "../assets/search.png";
@@ -10,17 +11,23 @@ const Main = () => {
   const ref = useRef(null);
   const [placeHolder, setPlaceHolder] = useState(true);
   const [text, setText] = useState("");
+  const [errorMessage, setErrorMessage] = useState(false);
   const [displaySearch, setDisplaySearch] = useState([]);
 
   async function handleSearch() {
     setPlaceHolder(false);
-    const response = await fetch(
-      `https://api.dictionaryapi.dev/api/v2/entries/en/${text}`
-    );
+    try {
+      const response = await fetch(
+        `https://api.dictionaryapi.dev/api/v2/entries/en/${text}`
+      );
 
-    if (!response.ok) {
-      throw new Error();
+      if (!response.ok) {
+        throw new Error();
+      }
+    } catch (error) {
+      setErrorMessage(true);
     }
+
     const data = await response.json();
     console.log(data);
     const arr = [];
@@ -75,9 +82,7 @@ const Main = () => {
       </div>
       {placeHolder ? (
         <div className="flex flex-col justify-center items-center mt-[120px]">
-          <img 
-          className="w-56"
-          src={boy} alt="" />
+          <img className="w-56" src={boy} alt="" />
           <h2 className="font-['Pacifico'] mt-3 text-2xl">Search For A Word</h2>
         </div>
       ) : (
@@ -160,6 +165,15 @@ const Main = () => {
             </div>
           </div>
         ))}
+        {errorMessage && (
+          <div className="flex flex-col justify-center items-center mt-[120px]">
+            <img className="w-56" src={sadboy} alt="" />
+            <p className="font-['Pacifico'] mt-3 text-2xl text-center w-[25ch]">
+              Sorry pal, we couldn't find definitions for the word you were
+              looking for.
+            </p>
+          </div>
+        )}
       </div>
     </>
   );
