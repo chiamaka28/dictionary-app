@@ -16,16 +16,12 @@ const Main = () => {
 
   async function handleSearch() {
     setPlaceHolder(false);
-    try {
-      const response = await fetch(
-        `https://api.dictionaryapi.dev/api/v2/entries/en/${text}`
-      );
+     const response = await fetch(
+      `https://api.dictionaryapi.dev/api/v2/entries/en/${text}`
+    );
 
-      if (!response.ok) {
-        throw new Error();
-      }
-    } catch (error) {
-      setErrorMessage(true);
+    if (!response.ok) {
+      throw new Error();
     }
 
     const data = await response.json();
