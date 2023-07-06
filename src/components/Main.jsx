@@ -81,7 +81,7 @@ const Main = ({ handleTheme}) => {
       </div>
       <div className="relative">
         <input
-          className="bg-grey w-full outline-0 py-2 px-4 my-4 rounded-lg dark:text-white"
+          className="bg-grey w-full outline-0 py-2 px-4 my-4 rounded-lg"
           value={text}
           name="search"
           onChange={(e) => setText(e.target.value)}
@@ -101,7 +101,7 @@ const Main = ({ handleTheme}) => {
       <div className="px-5">
         {displaySearch.map((item, index) => (
           <div key={index}>
-            <h1 className="text-3xl dark:text-white">{item.word}</h1>
+            <h1 className="text-3xl">{item.word}</h1>
             {item.phonetics.slice(0, 1).map((it, index) => {
               return (
                 <div key={index} className="flex justify-between ">
@@ -123,13 +123,13 @@ const Main = ({ handleTheme}) => {
                     key={index}
                     className="flex  items-center justify-start gap-3"
                   >
-                    <h2 className="font-['Pacifico'] text-[18px]  dark:text-white">
+                    <h2 className="font-['Pacifico'] text-[18px] ">
                       {meaning.partOfSpeech}
                     </h2>
                     <span className="w-[100%] h-[1px] bg-grey"></span>
                   </div>
                   <div className="pb-7">
-                    <h4 className="py-4 text-gray  dark:text-white">Meaning</h4>
+                    <h4 className="py-4 text-gray  ">Meaning</h4>
 
                     {meaning.definitions
                       .slice(0, 5)
@@ -137,12 +137,12 @@ const Main = ({ handleTheme}) => {
                         return (
                           <div>
                             <ul className="list-disc list-outside list-style-purple marker:text-purple">
-                              <li key={index} className="py-2  dark:text-white">
+                              <li key={index} className="py-2 ">
                                 {definition.definition}
                               </li>
                             </ul>
                             {definition.example ? (
-                              <p className="text-gray  dark:text-white">
+                              <p className="text-gray ">
                                 "{definition.example}"
                               </p>
                             ) : (
@@ -168,8 +168,8 @@ const Main = ({ handleTheme}) => {
               );
             })}
             <div className="py-4 md:flex md:gap-2 border-t-[1px] border-grey pb-12">
-              <h4 className="text-gray  dark:text-white">Source</h4>
-              <a className="underline  dark:text-white" href={item.sourceUrls} target="_blank">
+              <h4 className="text-gray ">Source</h4>
+              <a className="underline " href={item.sourceUrls} target="_blank">
                 {item.sourceUrls}
               </a>
             </div>
