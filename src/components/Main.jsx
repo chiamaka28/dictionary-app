@@ -1,22 +1,22 @@
 import book from "../assets/book.png";
 import boy from "../assets/boy.png";
 import sadboy from "../assets/sadboy.png";
-import toggle from "../assets/toggle.png";
 import moon from "../assets/moon.png";
 import search from "../assets/search.png";
 import play from "../assets/play.png";
 import { useState, useRef } from "react";
 
-const Main = () => {
+const Main = ({ handleTheme}) => {
   const ref = useRef(null);
   const [placeHolder, setPlaceHolder] = useState(true);
   const [text, setText] = useState("");
   const [errorMessage, setErrorMessage] = useState(false);
   const [displaySearch, setDisplaySearch] = useState([]);
+  
 
   async function handleSearch() {
     setPlaceHolder(false);
-     const response = await fetch(
+    const response = await fetch(
       `https://api.dictionaryapi.dev/api/v2/entries/en/${text}`
     );
 
@@ -34,9 +34,10 @@ const Main = () => {
     return data;
   }
 
-  console.log(displaySearch);
-  console.log(typeof displaySearch);
+  // console.log(displaySearch);
+  // console.log(typeof displaySearch);
 
+ 
   const clickHandler = () => {
     handleSearch();
     setText("");
@@ -47,7 +48,7 @@ const Main = () => {
   };
 
   return (
-    <>
+    <div>
       <div className="flex justify-between py-5">
         <div>
           <img className="w-10" src={book} alt="" />
@@ -57,8 +58,21 @@ const Main = () => {
             <option value="Serif">Serif</option>
             <option value="Sans-serif">Sans-serif</option>
           </select>
-          <div>
-            <img className="w-10" src={toggle} alt="" />
+          <div className="relative" onClick={handleTheme}>
+            <input
+              type="checkbox"
+              className="peer
+    appearance-none cursor-pointer
+    border bg-grey rounded-full
+    checked:bg-lightPurple w-12 h-6"
+            />
+            <span
+              className="peer-checked:left-7
+    transition-all duration-200
+    pointer-events-none w-4 h-4
+    block absolute top-1 left-1
+    rounded-full bg-darkGrey"
+            ></span>
           </div>
           <div>
             <img className="w-9" src={moon} alt="" />
@@ -67,7 +81,7 @@ const Main = () => {
       </div>
       <div className="relative">
         <input
-          className="bg-grey w-full outline-0 py-2 px-4 my-4 rounded-lg"
+          className="bg-grey w-full outline-0 py-2 px-4 my-4 rounded-lg dark:text-white"
           value={text}
           name="search"
           onChange={(e) => setText(e.target.value)}
@@ -87,7 +101,7 @@ const Main = () => {
       <div className="px-5">
         {displaySearch.map((item, index) => (
           <div key={index}>
-            <h1 className="text-3xl">{item.word}</h1>
+            <h1 className="text-3xl dark:text-white">{item.word}</h1>
             {item.phonetics.slice(0, 1).map((it, index) => {
               return (
                 <div key={index} className="flex justify-between ">
@@ -109,13 +123,13 @@ const Main = () => {
                     key={index}
                     className="flex  items-center justify-start gap-3"
                   >
-                    <h2 className="font-['Pacifico'] text-[18px]">
+                    <h2 className="font-['Pacifico'] text-[18px]  dark:text-white">
                       {meaning.partOfSpeech}
                     </h2>
                     <span className="w-[100%] h-[1px] bg-grey"></span>
                   </div>
                   <div className="pb-7">
-                    <h4 className="py-4 text-gray">Meaning</h4>
+                    <h4 className="py-4 text-gray  dark:text-white">Meaning</h4>
 
                     {meaning.definitions
                       .slice(0, 5)
@@ -123,12 +137,12 @@ const Main = () => {
                         return (
                           <div>
                             <ul className="list-disc list-outside list-style-purple marker:text-purple">
-                              <li key={index} className="py-2">
+                              <li key={index} className="py-2  dark:text-white">
                                 {definition.definition}
                               </li>
                             </ul>
                             {definition.example ? (
-                              <p className="text-gray">
+                              <p className="text-gray  dark:text-white">
                                 "{definition.example}"
                               </p>
                             ) : (
@@ -138,8 +152,8 @@ const Main = () => {
                               .slice(0, 1)
                               .map((synonyms, index) => {
                                 return (
-                                  <p key={index} className="text-purple py-3">
-                                    <span className="text-gray pr-5">
+                                  <p key={index} className="text-purple py-3 ">
+                                    <span className="text-gray pr-5 ">
                                       Synonyms
                                     </span>
                                     {synonyms}
@@ -154,8 +168,8 @@ const Main = () => {
               );
             })}
             <div className="py-4 md:flex md:gap-2 border-t-[1px] border-grey pb-12">
-              <h4 className="text-gray">Source</h4>
-              <a className="underline" href={item.sourceUrls} target="_blank">
+              <h4 className="text-gray  dark:text-white">Source</h4>
+              <a className="underline  dark:text-white" href={item.sourceUrls} target="_blank">
                 {item.sourceUrls}
               </a>
             </div>
@@ -171,7 +185,7 @@ const Main = () => {
           </div>
         )}
       </div>
-    </>
+    </div>
   );
 };
 
