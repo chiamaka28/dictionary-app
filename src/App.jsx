@@ -1,29 +1,35 @@
 import "./App.css";
 import Main from "./components/Main";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 
 
 function App() {
-  const [darkMode, setDarkMode] = useState(false)
+  const [theme, setTheme] = useState(null)
   
-
-  const handleTheme = () => {
-    setDarkMode(!darkMode);
-    console.log(darkMode);
-
-    
-    if (darkMode) {
-      document.documentElement.classList.add('dark');
-    } else {
-      document.documentElement.classList.remove('dark');
-    }
+ useEffect(() => {
+  if (window.matchMedia('(prefers-color-scheme : dark)').matches){
+    setTheme("dark")
+  }else{
+    setTheme("light")
   }
+ }, [])
+
+ 
+ useEffect(() => {
+  if (theme === "dark") {
+    document.documentElement.classList.add("dark")
+  }else{
+    document.documentElement.classList.remove("dark")
+  }
+ },[theme])
+   
+ const handleTheme = () =>{
+  setTheme(theme === "dark" ? "light" : "dark")
+ }
   return (
-    <div className={`min-h-screen w-full dark:bg-black  ${
-      darkMode && 'dark'
-    }`}>
+    <div className="min-h-screen dark:bg-black">
       <div className="my-container ">
-        <Main  handleTheme={handleTheme}/>
+        <Main handleTheme={handleTheme} />
       </div>
     </div>
   );
