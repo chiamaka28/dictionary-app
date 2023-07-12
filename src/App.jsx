@@ -14,7 +14,7 @@ function App() {
   }
  }, [])
 
- 
+
  useEffect(() => {
   if (theme === "dark") {
     document.documentElement.classList.add("dark")
@@ -23,7 +23,7 @@ function App() {
   }
  },[theme])
    
- const handleTheme = () =>{
+ const handleTheme = () => {
   setTheme(theme === "dark" ? "light" : "dark")
  }
   return (
