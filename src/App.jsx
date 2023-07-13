@@ -29,7 +29,7 @@ function App() {
   return (
     <div className="min-h-screen dark:bg-black">
       <div className="my-container ">
-        <Main handleTheme={handleTheme} />
+        <Main handleTheme={handleTheme} theme={theme} />
       </div>
     </div>
   );

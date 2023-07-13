@@ -1,18 +1,19 @@
 import book from "../assets/book.png";
+import book1 from "../assets/book1.png";
 import boy from "../assets/boy.png";
 import sadboy from "../assets/sadboy.png";
-import moon from "../assets/moon.png";
+import moon from "../assets/moon1.png";
+import sun from "../assets/sun.png";
 import search from "../assets/search.png";
 import play from "../assets/play.png";
 import { useState, useRef } from "react";
 
-const Main = ({ handleTheme}) => {
+const Main = ({ handleTheme, theme }) => {
   const ref = useRef(null);
   const [placeHolder, setPlaceHolder] = useState(true);
   const [text, setText] = useState("");
   const [errorMessage, setErrorMessage] = useState(false);
   const [displaySearch, setDisplaySearch] = useState([]);
-  
 
   async function handleSearch() {
     setPlaceHolder(false);
@@ -37,7 +38,6 @@ const Main = ({ handleTheme}) => {
   // console.log(displaySearch);
   // console.log(typeof displaySearch);
 
- 
   const clickHandler = () => {
     handleSearch();
     setText("");
@@ -51,13 +51,17 @@ const Main = ({ handleTheme}) => {
     <div>
       <div className="flex justify-between py-5">
         <div>
-          <img className="w-10" src={book} alt="" />
+          {theme === "dark" ? (
+            <img className="w-10" src={book1} alt="" />
+          ) : (
+            <img className="w-10" src={book} alt="" />
+          )}
         </div>
         <div className="flex gap-4 items-center justify-center">
-          <select className="border-r-[1px] border-gray-500">
+          {/* <select className="border-r-[1px] border-gray-500">
             <option value="Serif">Serif</option>
             <option value="Sans-serif">Sans-serif</option>
-          </select>
+          </select> */}
           <div className="relative" onClick={handleTheme}>
             <input
               type="checkbox"
@@ -75,7 +79,11 @@ const Main = ({ handleTheme}) => {
             ></span>
           </div>
           <div>
-            <img className="w-9" src={moon} alt="" />
+            {theme === "dark" ? (
+              <img className="w-9" src={moon} alt="" />
+            ) : (
+              <img className="w-9" src={sun} alt="" />
+            )}
           </div>
         </div>
       </div>
@@ -93,7 +101,9 @@ const Main = ({ handleTheme}) => {
       {placeHolder ? (
         <div className="flex flex-col justify-center items-center mt-[120px]">
           <img className="w-56" src={boy} alt="" />
-          <h2 className="font-['Pacifico'] mt-3 text-2xl">Search For A Word</h2>
+          <h2 className="font-['Pacifico'] mt-3 text-2xl dark:text-grey">
+            Search For A Word
+          </h2>
         </div>
       ) : (
         ""
@@ -101,7 +111,7 @@ const Main = ({ handleTheme}) => {
       <div className="px-5">
         {displaySearch.map((item, index) => (
           <div key={index}>
-            <h1 className="text-3xl">{item.word}</h1>
+            <h1 className="text-3xl  dark:text-white">{item.word}</h1>
             {item.phonetics.slice(0, 1).map((it, index) => {
               return (
                 <div key={index} className="flex justify-between ">
@@ -123,13 +133,15 @@ const Main = ({ handleTheme}) => {
                     key={index}
                     className="flex  items-center justify-start gap-3"
                   >
-                    <h2 className="font-['Pacifico'] text-[18px] ">
+                    <h2 className="font-['Pacifico'] text-[18px]  dark:text-white">
                       {meaning.partOfSpeech}
                     </h2>
                     <span className="w-[100%] h-[1px] bg-grey"></span>
                   </div>
                   <div className="pb-7">
-                    <h4 className="py-4 text-gray  ">Meaning</h4>
+                    <h4 className="py-4 text-gray   dark:text-white">
+                      Meaning
+                    </h4>
 
                     {meaning.definitions
                       .slice(0, 5)
@@ -137,12 +149,12 @@ const Main = ({ handleTheme}) => {
                         return (
                           <div>
                             <ul className="list-disc list-outside list-style-purple marker:text-purple">
-                              <li key={index} className="py-2 ">
+                              <li key={index} className="py-2  dark:text-white">
                                 {definition.definition}
                               </li>
                             </ul>
                             {definition.example ? (
-                              <p className="text-gray ">
+                              <p className="text-gray  dark:text-white">
                                 "{definition.example}"
                               </p>
                             ) : (
@@ -152,7 +164,10 @@ const Main = ({ handleTheme}) => {
                               .slice(0, 1)
                               .map((synonyms, index) => {
                                 return (
-                                  <p key={index} className="text-purple py-3 ">
+                                  <p
+                                    key={index}
+                                    className="text-purple py-3  dark:text-white"
+                                  >
                                     <span className="text-gray pr-5 ">
                                       Synonyms
                                     </span>
@@ -168,8 +183,12 @@ const Main = ({ handleTheme}) => {
               );
             })}
             <div className="py-4 md:flex md:gap-2 border-t-[1px] border-grey pb-12">
-              <h4 className="text-gray ">Source</h4>
-              <a className="underline " href={item.sourceUrls} target="_blank">
+              <h4 className="text-gray  dark:text-white">Source</h4>
+              <a
+                className="underline  dark:text-white"
+                href={item.sourceUrls}
+                target="_blank"
+              >
                 {item.sourceUrls}
               </a>
             </div>
