@@ -12,21 +12,20 @@ const Main = ({ handleTheme, theme }) => {
   const ref = useRef(null);
   const [placeHolder, setPlaceHolder] = useState(true);
   const [text, setText] = useState("");
-  const [errorMessage, setErrorMessage] = useState(false);
+  const [error, setError] = useState(null);
   const [displaySearch, setDisplaySearch] = useState([]);
 
   async function handleSearch() {
     setPlaceHolder(false);
+    try{
+    setError("")
     const response = await fetch(
       `https://api.dictionaryapi.dev/api/v2/entries/en/${text}`
     );
-
     if (!response.ok) {
-      throw new Error();
+      throw new Error(" Sorry pal, we couldn't find definitions for the word you were looking for.");
     }
-
     const data = await response.json();
-    console.log(data);
     const arr = [];
     const word = data[0];
     console.log(word);
@@ -34,10 +33,15 @@ const Main = ({ handleTheme, theme }) => {
     arr.push(word);
     return data;
   }
+  catch (error){
+    setError(error.message)
+  }
+  }
 
-  // console.log(displaySearch);
-  // console.log(typeof displaySearch);
-
+  // handleSearch().catch(error => {
+  //    console.log(error.message)
+  // })
+  
   const clickHandler = () => {
     handleSearch();
     setText("");
@@ -194,12 +198,11 @@ const Main = ({ handleTheme, theme }) => {
             </div>
           </div>
         ))}
-        {errorMessage && (
+        {error && (
           <div className="flex flex-col justify-center items-center mt-[120px]">
             <img className="w-56" src={sadboy} alt="" />
             <p className="font-['Pacifico'] mt-3 text-2xl text-center w-[25ch]">
-              Sorry pal, we couldn't find definitions for the word you were
-              looking for.
+             {error}
             </p>
           </div>
         )}
