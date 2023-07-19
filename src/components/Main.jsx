@@ -25,6 +25,7 @@ const Main = ({ handleTheme, theme }) => {
     if (!response.ok) {
       throw new Error(" Sorry pal, we couldn't find definitions for the word you were looking for.");
     }
+    console.log(response)
     const data = await response.json();
     const arr = [];
     const word = data[0];
@@ -34,6 +35,7 @@ const Main = ({ handleTheme, theme }) => {
     return data;
   }
   catch (error){
+    setDisplaySearch([])
     setError(error.message)
   }
   }
